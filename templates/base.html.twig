@@ -20,9 +20,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/factuur">Factuur</a>
                         </li>
+                        {% if(is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") or is_granted("ROLE_BALIE")) %}
                         <li class="nav-item">
                             <a class="nav-link" href="/producten">Producten</a>
                         </li>
+                        {% endif %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Dropdown
@@ -34,9 +36,11 @@
                                 <li><a class="dropdown-item" href="/contact">Contact</a></li>
                             </ul>
                         </li>
+                        {% if(is_granted("ROLE_ADMIN") or is_granted("ROLE_BOEKHOUDING")) %}
                         <li class="nav-item">
                             <a class="nav-link " href="/rapporten" tabindex="-1" aria-disabled="true">Rapporten</a>
                         </li>
+                        {% endif %}
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

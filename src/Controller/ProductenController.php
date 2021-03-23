@@ -9,9 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/producten")
+ * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') or is_granted('ROLE_BALIE')")
  */
 class ProductenController extends AbstractController
 {
@@ -20,6 +23,12 @@ class ProductenController extends AbstractController
      */
     public function index(ProductenRepository $productenRepository): Response
     {
+        $user = $this->getUser()->getRoles();
+        foreach ($user as $role) {
+            if($role === "ROLE_BOEKHOUDING") {
+                return  $this->redirect("/");
+            }
+        }
         return $this->render('producten/index.html.twig', [
             'productens' => $productenRepository->findAll(),
         ]);
